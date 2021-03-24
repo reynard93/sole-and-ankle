@@ -4,17 +4,9 @@ import styled from 'styled-components/macro';
 import { COLORS, WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
-import ShoeGrid from "../ShoeGrid";
+import ShoeGrid from '../ShoeGrid';
 
-const ShoeCard = ({
-  slug,
-  name,
-  imageSrc,
-  price,
-  salePrice,
-  releaseDate,
-  numOfColors,
-}) => {
+const ShoeCardGhost = () => {
   // There are 3 variants possible, based on the props:
   //   - new-release
   //   - on-sale
@@ -26,34 +18,14 @@ const ShoeCard = ({
   // both on-sale and new-release, but in this case, `on-sale`
   // will triumph and be the variant used.
   // prettier-ignore
-  const variant = typeof salePrice === 'number'
-    ? 'on-sale'
-    : isNewShoe(releaseDate)
-      ? 'new-release'
-      : 'default'
 
   return (
-    <Link href={`/shoe/${slug}`}>
-      <Wrapper>
-        <ImageWrapper>
-          <Image alt="" src={imageSrc} />
-        </ImageWrapper>
-        <Spacer size={12} />
-        <Row>
-          <Name>{name}</Name>
-          <Price variant={variant}>{formatPrice(price)}</Price>
-        </Row>
-        <Row>
-          <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
-          <SalePrice variant={variant}>{formatPrice(salePrice)}</SalePrice>
-        </Row>
-      </Wrapper>
-    </Link>
-  );
+			<Link>
+			</Link>
+	);
 };
 
-const Link = styled.a`
-  text-decoration: none;
+const Link = styled.div`
   color: inherit;
   flex: 1 1 344px;
   
@@ -69,14 +41,11 @@ const ImageWrapper = styled.div`
 `;
 
 const Image = styled.img`
-  max-width: 100%;
-  width: 864px;
+  width: 100%;
 `;
 
 const Row = styled.div`
   font-size: 1rem;
-	display: flex;
-  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -84,9 +53,7 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span`
-  text-decoration: ${p => p.variant === 'on-sale' ? 'line-through' : 'none'};
-`;
+const Price = styled.span``;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
@@ -95,8 +62,6 @@ const ColorInfo = styled.p`
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
-  
-  display: ${p => p.variant === 'on-sale' ? 'inline-block' : 'none'} ;
 `;
 
-export default ShoeCard;
+export default ShoeCardGhost;
