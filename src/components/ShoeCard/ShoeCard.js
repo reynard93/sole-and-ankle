@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import { COLORS, WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
-import ShoeGrid from "../ShoeGrid";
+import ShoeGrid from '../ShoeGrid';
 
 const ShoeCard = ({
   slug,
@@ -32,10 +32,22 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+  const tagNames = (currentVariant) => {
+    switch (currentVariant) {
+      case 'on-sale':
+        return 'Sale';
+      case 'new-release':
+        return 'Just Released!';
+      default:
+        return;
+    }
+  };
+
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
+          <HotTag variant={variant}>{tagNames(variant)}</HotTag>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
         <Spacer size={12} />
@@ -62,6 +74,21 @@ const Link = styled.a`
   // }
 `;
 
+const HotTag = styled.span`
+  display: ${(p) => (p.variant === 'default' ? 'none' : 'inline-block')};
+  position: absolute;
+  top: 12px;
+  padding: 7px 9px 9px 11px;
+  margin-right: -4px;
+  border-radius: 2px;
+  right: 0;
+  color: ${COLORS.white};
+  font-weight: ${WEIGHTS.bold};
+
+  background-color: ${(p) =>
+    p.variant === 'on-sale' ? COLORS.primary : COLORS.secondary};
+`;
+
 const Wrapper = styled.article``;
 
 const ImageWrapper = styled.div`
@@ -75,7 +102,7 @@ const Image = styled.img`
 
 const Row = styled.div`
   font-size: 1rem;
-	display: flex;
+  display: flex;
   justify-content: space-between;
 `;
 
@@ -85,7 +112,8 @@ const Name = styled.h3`
 `;
 
 const Price = styled.span`
-  text-decoration: ${p => p.variant === 'on-sale' ? 'line-through' : 'none'};
+  text-decoration: ${(p) =>
+    p.variant === 'on-sale' ? 'line-through' : 'none'};
 `;
 
 const ColorInfo = styled.p`
@@ -95,8 +123,8 @@ const ColorInfo = styled.p`
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
-  
-  display: ${p => p.variant === 'on-sale' ? 'inline-block' : 'none'} ;
+
+  display: ${(p) => (p.variant === 'on-sale' ? 'inline-block' : 'none')};
 `;
 
 export default ShoeCard;
